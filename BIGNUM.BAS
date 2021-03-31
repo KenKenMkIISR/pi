@@ -126,3 +126,39 @@ LABEL ROUND
   VALUE(I)=VALUE(I)+1
  LOOP UNTIL VALUE(I)<10000
 RETURN
+
+METHOD PRT
+ REM Print value
+ REM PRT(i,j)
+ REM i:Start position after the decimal point
+ REM   of the VALUE array
+ REM     Ex i=1  VALUE(0) "." VALUE(1)
+ REM j:Number of digits after the decimal point
+
+ VAR I,K,S
+ K=ARGS(1)
+ IF K=0 THEN
+  PRINT "0";
+ ELSE
+  I=0
+  WHILE VALUE(I)=0 AND I<K-1:I=I+1:WEND
+  PRINT VALUE(I);:I=I+1
+  DO WHILE I<K
+   S$="000"+DEC$(VALUE(I)):PRINT S$(-4);
+   I=I+1
+  LOOP
+ ENDIF
+ IF K>250 THEN RETURN
+ K=ARGS(2)
+ IF K=0 THEN RETURN
+ PRINT ".";
+ DO WHILE K>=4 AND I<=250
+  S$="000"+DEC$(VALUE(I)):PRINT S$(-4);
+  K=K-4:I=I+1
+ LOOP
+ IF K>0 AND I<=250 THEN
+  S$="000"+DEC$(VALUE(I)):S$=S$(-4)
+  PRINT S$(0,K);
+ ENDIF
+ PRINT
+RETURN
